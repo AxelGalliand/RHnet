@@ -43,7 +43,7 @@ export function Home () {
     </div>
     <div className={styles["container"]}>
       <div className={styles["emplyoyeList-linkContainer"]}>
-        <Link className={styles["employeList-link"]}>
+        <Link className={styles["employeList-link"]} to="/employees">
           <p className={styles["employeList-link-text"]}>View Current Employees</p>
         </Link>
       </div>
