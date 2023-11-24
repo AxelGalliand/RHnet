@@ -1,8 +1,8 @@
 import './App.css'
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home } from './Pages/Home'
-import { Employees } from './Pages/Employees';
+import Home from './Pages/Home'
+import  Employees  from './Pages/Employees';
 
 export function App() {
   return (

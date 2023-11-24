@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { employeCreation } from "../features/employe.slice";
 
 
-export function Home () {
+const Home =()=> {
   const inputFirstName = useRef();
   const inputLastName = useRef();
   const inputDateOfBirth = useRef();
@@ -21,15 +21,15 @@ export function Home () {
   const handleSubmit = (e) => {
    e.preventDefault();
    const data = {
-     firsName: inputFirstName.current.value,
+     firstName: inputFirstName.current.value,
      lastName: inputLastName.current.value,
-     dateOfBirth: inputDateOfBirth.current.value,
-     dateOfStart: inputDateOfStart.current.value,
+     dateBirth: inputDateOfBirth.current.value,
+     dateStart: inputDateOfStart.current.value,
      street: inputStreet.current.value,
      city: inputCity.current.value,
-     sate: inputState.current.value,
+     state: inputState.current.value,
      zipCode: inputZipCode.current.value,
-     department: inputDepartment.current.value
+     departement: inputDepartment.current.value
 
    };
 
@@ -165,4 +165,5 @@ export function Home () {
      
   </main>
   )
- }
+ };
+ export default Home;

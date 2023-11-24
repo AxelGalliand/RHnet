@@ -5,82 +5,20 @@ import Table from 'react-bootstrap/Table';
 import { useSelector } from 'react-redux';
 import { stateEmploye } from '../features/employe.slice';
 import styles from '../styles/tableMaker.module.css';
-import { TableContent } from '../Component/TableContent';
+import TableContent from '../Component/TableContent';
 import chevUp from '../assets/chevronUp.svg';
 import chevDown from '../assets/chevronDown.svg';
-export function TableMaker () {
+import PropTypes from 'prop-types';
 
-    async function fetchData() {
-        return fetch("../data/employee.json")
-        .then(function(result) {
-          if(result.ok) {
-            return result.json();
-          }
-        })
-      }
-      console.log(fetchData());
+const TableMaker = (props) => {
 
-
-    const { data } = useSelector(stateEmploye);
-    const [rows, setRows] = useState(data);
-   
-    const [columns, setColumns] = useState([
-      {
-        dataField: 'firstName',
-        text: 'First Name',
-        sortOrder: "ASC",
-        type: "String",
-      },
-      {
-        dataField: 'lastName',
-        text: 'Last Name',
-        sortOrder: "ASC",
-        type: "String",
-      },
-      {
-        dataField: 'dateBirth',
-        text: 'Date of birth',
-        sortOrder: "ASC",
-        type: "Date",
-      },
-      {
-        dataField: 'dateStart',
-        text: 'Date of Start',
-        sortOrder: "ASC",
-        type: "Date",
-      },
-      {
-        dataField: 'street',
-        text: 'Street',
-        sortOrder: "ASC",
-        type: "String",
-      },
-      {
-        dataField: 'city',
-        text: 'City',
-        sortOrder: "ASC",
-        type: "String",
-      },
-      {
-        dataField: 'state',
-        text: 'State',
-        sortOrder: "ASC",
-        type: "String",
-      },
-      {
-        dataField: 'zipCode',
-        text: 'Zip Code',
-        sortOrder: "ASC",
-        type: "Number",
-      },
-      {
-        dataField: 'departement',
-        text: 'Departement',
-        sortOrder: "ASC",
-        type: "String",
-      },
-    ]);
-
+    const data = [...props.rows]
+    const [rows, setRows] = useState([...props.rows]);
+    const [columns, setColumns] = useState(props.columns);
+    const [slice, setSlice] = useState(10)
+    const [currentIndex, setCurrentIndex] = useState(0)
+    const [search, setSearch] = useState("")
+    const [totalPage, setTotalPage] = useState(Math.ceil(data.length / slice))
     const sortRow = (column) => {
       console.log(column);
       const columnsUpdated = [...columns];
@@ -116,37 +54,54 @@ export function TableMaker () {
       setRows(rowsSorted)
     }
 
-    const SearchBar = () => {
-      
-      addEventListener('change', function (e) {
-        const input = e.target.value.toLowerCase();
-        let filter = [];
-        console.log(input, data)
-        filter = data.filter((row) => {
-          return (
-            row.firstName.toLowerCase().includes(input) ||
-            row.lastName.toLowerCase().includes(input) ||
-            row.dateBirth.toLowerCase().includes(input) ||
-            row.dateStart.toLowerCase().includes(input) ||
-            row.street.toLowerCase().includes(input) ||
-            row.city.toLowerCase().includes(input) ||
-            row.state.toLowerCase().includes(input) ||
-            row.zipCode.toLowerCase().includes(input) ||
-            row.departement.toLowerCase().includes(input)
-          )
-        })
-        console.log(filter)
-        setRows(filter)
 
+    const SearchBar = (e) => {
+      const input = e.target.value.toLowerCase();
+      setSearch(input)
+      filterBySearch(input)
+    }
+
+    const filterBySearch = (input) => {
+      console.log(input, data)
+      let filter = data.filter((row) => {
+        return (
+          row.firstName.toLowerCase().includes(input) ||
+          row.lastName.toLowerCase().includes(input) ||
+          row.dateBirth.toLowerCase().includes(input) ||
+          row.dateStart.toLowerCase().includes(input) ||
+          row.street.toLowerCase().includes(input) ||
+          row.city.toLowerCase().includes(input) ||
+          row.state.toLowerCase().includes(input) ||
+          row.zipCode.toLowerCase().includes(input) ||
+          row.departement.toLowerCase().includes(input)
+        )
       })
+      console.log(filter)
+      setRows(filter)
+    }
 
+    const SliceBy = (e) => {
+      const number = +e.target.value
+      setSlice(number)
+      setTotalPage(Math.ceil(data.length / number))
     }
 
 
     return (
         
-          <div className={styles["TableDiv"]}>
+        <div className={styles["TableDiv"]}>
           <input type='text' className={styles["TableSerch"]} placeholder='Recherche' onChange={SearchBar}></input>
+          <div className={styles["sizeButton"]}>
+          <select className={styles["sizeSelect"]} onChange={SliceBy}>
+            <option value={10}>10</option>
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+          </select>
+          <div className="pagination">
+              nombre de page {totalPage}
+            </div> 
+          </div>
             <Table striped bordered hover>
               <thead>
                 <tr>
@@ -156,8 +111,14 @@ export function TableMaker () {
                 </tr>
               </thead>
                 <TableContent columns={columns} data={rows}/>
-            </Table>   
-          </div>
+            </Table>  
         
+        </div>
     )
 }
+ TableMaker.propTypes ={
+  rows: PropTypes.array,
+  columns: PropTypes.array
+ }
+
+export default TableMaker
