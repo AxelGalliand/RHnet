@@ -11,17 +11,17 @@ import chevDown from '../assets/chevronDown.svg';
 import chevRight from '../assets/chevronRight.svg';
 import chevLeft from '../assets/chevronLeft.svg';
 import PropTypes from 'prop-types';
-import { current } from '@reduxjs/toolkit';
 
 const TableMaker = (props) => {
 
     const data = [...props.rows]
-    const [rows, setRows] = useState([...props.rows]);
+    const [rows, setRows] = useState([...data]);
     const [columns, setColumns] = useState(props.columns);
     const [slice, setSlice] = useState(10);
     const [search, setSearch] = useState("");
     const [totalPage, setTotalPage] = useState(Math.ceil(data.length / slice));
     const [currentPage, setCurrentPage] = useState(1);
+    
     const sortRow = (column) => {
       console.log(column);
       const columnsUpdated = [...columns];
@@ -110,10 +110,12 @@ const TableMaker = (props) => {
 
     const firstPage = () => {
       setCurrentPage(1)
+      setRows(data.slice(0, 1 * slice))
     }
 
     const lastPage = () => {
       setCurrentPage(totalPage)
+      setRows(data.slice((totalPage - 1) * slice , totalPage * slice))
     }
 
     const previousPage = () => {
@@ -125,6 +127,8 @@ const TableMaker = (props) => {
       setCurrentPage(currentPage + 1)
       setRows(data.slice(currentPage * slice, (currentPage + 1) * slice))
     }
+
+    
     
     return (
         
