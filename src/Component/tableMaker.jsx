@@ -25,7 +25,7 @@ const TableMaker = (props) => {
     const sortRow = (column) => {
       console.log(column);
       const columnsUpdated = [...columns];
-      const rowsSorted = [...rows];
+      const rowsSorted = [...data];
       // on trie par ordre croissant
       if (column.type === "Date" || column.type === "Number") {
         // object.mapropriete
@@ -168,7 +168,7 @@ const TableMaker = (props) => {
                   </th>)}
                 </tr>
               </thead>
-                <TableContent columns={columns} data={rows}/>
+                <TableContent columns={columns} data={rows} sliceSize={slice}/>
             </Table>  
         
           <div className={styles["paginate"]}>

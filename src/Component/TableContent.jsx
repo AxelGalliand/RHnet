@@ -11,7 +11,7 @@ const TableContent = (props) => {
   
     return (
         <tbody>
-            {props.data.map((row, index) => <tr key={index}>
+            {props.data.map((row, index) => props.sliceSize >= index && <tr key={index}>
               {props.columns.map((column, index) => <td key={index}>{row[column.dataField]}</td>)} 
             </tr>)}
       </tbody>
@@ -19,7 +19,8 @@ const TableContent = (props) => {
 };
  TableContent.propTypes ={
   data: PropTypes.array,
-  columns: PropTypes.array
+  columns: PropTypes.array,
+  sliceSize: PropTypes.number
  }
 
  export default TableContent;
