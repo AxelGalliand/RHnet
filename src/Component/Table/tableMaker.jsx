@@ -2,93 +2,87 @@
 // 1. import React
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
-import { useSelector } from 'react-redux';
-import { stateEmploye } from '../features/employe.slice';
-import styles from '../styles/tableMaker.module.css';
-import TableContent from '../Component/TableContent';
-import chevUp from '../assets/chevronUp.svg';
-import chevDown from '../assets/chevronDown.svg';
-import chevRight from '../assets/chevronRight.svg';
-import chevLeft from '../assets/chevronLeft.svg';
+import styles from '../../styles/tableMaker.module.css';
+import TableContent from './TableContent';
+import chevUp from '../../assets/chevronUp.svg';
+import chevDown from '../../assets/chevronDown.svg';
+import chevRight from '../../assets/chevronRight.svg';
+import chevLeft from '../../assets/chevronLeft.svg';
 import PropTypes from 'prop-types';
 
 const TableMaker = (props) => {
 
     const data = [...props.rows]
-    const [rows, setRows] = useState([...data]);
     const [columns, setColumns] = useState(props.columns);
     const [slice, setSlice] = useState(10);
     const [search, setSearch] = useState("");
-    const [totalPage, setTotalPage] = useState(Math.ceil(data.length / slice));
+    // const [totalPage, setTotalPage] = useState(Math.ceil(data.length / slice));
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortOrder, setSortOrder] = useState("ASC");
+    const [sortColumn, setSortColumn] = useState(null);
+    const [sortType, setSortType] = useState("String");
     
     const sortRow = (column) => {
-      console.log(column);
+      setSortColumn(column.dataField)
+      setSortType(column.type)
+      setSortOrder(sortOrder === "ASC" ? "DSC" : "ASC")
+      
       const columnsUpdated = [...columns];
-      const rowsSorted = [...data];
-      // on trie par ordre croissant
-      if (column.type === "Date" || column.type === "Number") {
-        // object.mapropriete
-        // object["mapropriete"]
-        rowsSorted.sort((a,b) => {
-          return new Date(a[column.dataField]) - new Date(b[column.dataField])
-        })
-
-      } 
-      else {
-        rowsSorted.sort((a,b) => a[column.dataField].toLowerCase().localeCompare(b[column.dataField].toLowerCase()))
-      }
-
-      if(column.sortOrder === "ASC") {
-        column.sortOrder = "DSC"
-      }else {
-        // on inverse l'order des rows
-        rowsSorted.reverse()
-        column.sortOrder = "ASC"
-      }
-
       // on met à jour la column
       // on récupère l'index de la column à mettre à jour
       const indexColumn = columnsUpdated.findIndex((col) => col.dataField === column.dataField)
       // on met à la column dans le tableau
-      columnsUpdated[indexColumn] = column;
+      columnsUpdated[indexColumn].sortOrder = sortOrder === "ASC" ? "DSC" : "ASC";
       // on met à jour les states
       setColumns(columnsUpdated)
-      setRows(rowsSorted)
+      // setRows(rowsSorted)
     }
 
 
     const SearchBar = (e) => {
       const input = e.target.value.toLowerCase();
       setSearch(input)
-      filterBySearch(input)
     }
 
-    const filterBySearch = (input) => {
-      console.log(input, data)
-      let filter = data.filter((row) => {
-        return (
-          row.firstName.toLowerCase().includes(input) ||
-          row.lastName.toLowerCase().includes(input) ||
-          row.dateBirth.toLowerCase().includes(input) ||
-          row.dateStart.toLowerCase().includes(input) ||
-          row.street.toLowerCase().includes(input) ||
-          row.city.toLowerCase().includes(input) ||
-          row.state.toLowerCase().includes(input) ||
-          row.zipCode.toLowerCase().includes(input) ||
-          row.departement.toLowerCase().includes(input)
-        )
-      })
-      console.log(filter)
-      setRows(filter)
-    }
 
+
+    const filteredEmployees = data.filter((row) => {
+      return (
+        row.firstName.toLowerCase().includes(search) ||
+        row.lastName.toLowerCase().includes(search) ||
+        row.dateBirth.toLowerCase().includes(search) ||
+        row.dateStart.toLowerCase().includes(search) ||
+        row.street.toLowerCase().includes(search) ||
+        row.city.toLowerCase().includes(search) ||
+        row.state.toLowerCase().includes(search) ||
+        row.zipCode.toLowerCase().includes(search) ||
+        row.departement.toLowerCase().includes(search)
+      )
+    })
+
+    const sortedEmployees = filteredEmployees.sort((a,b) => {
+      if(sortColumn !== null) {
+        if (sortType === "Date") {
+          return new Date(a[sortColumn]) - new Date(b[sortColumn])
+        } else if (sortType === "Number") {
+          return a[sortColumn] - b[sortColumn]
+        }
+        else {
+          return a[sortColumn].toLowerCase().localeCompare(b[sortColumn].toLowerCase())
+        }
+      }
+    })
+    
+    if (sortOrder === "DSC") {
+      sortedEmployees.reverse()
+    }
+    const indexLastEmployee = currentPage * slice
+    const indexFirstEmployee = indexLastEmployee - slice
+    const currentEmployee = sortedEmployees.slice(indexFirstEmployee, indexLastEmployee)
+    const totalPage = Math.ceil(sortedEmployees.length / slice)
     const SliceBy = (e) => {
       const number = +e.target.value
       setSlice(number)
-      setTotalPage(Math.ceil(data.length / number))
-      setCurrentPage (1)
-      setRows(data.slice(0, number))
     }
   
     const range = (from, to, step = 1) => {
@@ -105,28 +99,24 @@ const TableMaker = (props) => {
 
     const changePage = (numberPage) => {
       setCurrentPage(numberPage)
-      setRows(data.slice((numberPage - 1) * slice, numberPage * slice))
     }
 
     const firstPage = () => {
       setCurrentPage(1)
-      setRows(data.slice(0, 1 * slice))
     }
 
     const lastPage = () => {
       setCurrentPage(totalPage)
-      setRows(data.slice((totalPage - 1) * slice , totalPage * slice))
     }
 
     const previousPage = () => {
       setCurrentPage(currentPage - 1)
-      setRows(data.slice((currentPage - 2) * slice, (currentPage - 1) * slice))
     }
 
     const nextPage = () => {
       setCurrentPage(currentPage + 1)
-      setRows(data.slice(currentPage * slice, (currentPage + 1) * slice))
     }
+
 
     
     
@@ -168,7 +158,7 @@ const TableMaker = (props) => {
                   </th>)}
                 </tr>
               </thead>
-                <TableContent columns={columns} data={rows} sliceSize={slice}/>
+                <TableContent columns={columns} data={currentEmployee} />
             </Table>  
         
           <div className={styles["paginate"]}>

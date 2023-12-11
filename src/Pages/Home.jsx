@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { employeCreation } from "../features/employe.slice";
+import dateSelector from "../Component/DatePicker/datePicker";
 
 
 const Home =()=> {
@@ -60,11 +61,11 @@ const Home =()=> {
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateofbirth">Date of Birth</label>
-            <input type="date" id="dateofbirth" ref={inputDateOfBirth}/>
+            <dateSelector />
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateofstart">Date of Start</label>
-            <input type="date" id="dateofstart" ref={inputDateOfStart}/>
+            <dateSelector  />
           </div>
           <h3 className={styles["AdressTitle"]}> Address </h3>
           <div className={styles["AdressForm"]}>
