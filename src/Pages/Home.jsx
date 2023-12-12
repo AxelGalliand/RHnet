@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { employeCreation } from "../features/employe.slice";
-import dateSelector from "../Component/DatePicker/datePicker";
+import DateSelector from "../Component/DatePicker/datePicker";
 
 
 const Home =()=> {
@@ -24,8 +24,8 @@ const Home =()=> {
    const data = {
      firstName: inputFirstName.current.value,
      lastName: inputLastName.current.value,
-     dateBirth: inputDateOfBirth.current.value,
-     dateStart: inputDateOfStart.current.value,
+    //  dateBirth: inputDateOfBirth.current.value,
+    //  dateStart: inputDateOfStart.current.value,
      street: inputStreet.current.value,
      city: inputCity.current.value,
      state: inputState.current.value,
@@ -34,9 +34,16 @@ const Home =()=> {
 
    };
 
+ 
   dispatch(employeCreation(data))
   }
      
+  const onDateOf = (dateOf) => {
+    console.log(dateOf)
+
+   }
+
+
    return(
     <main>
     <div className={styles["title"]}>
@@ -61,11 +68,11 @@ const Home =()=> {
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateofbirth">Date of Birth</label>
-            <dateSelector />
+            <DateSelector id="dateofbirth" dateof={onDateOf}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateofstart">Date of Start</label>
-            <dateSelector  />
+            <DateSelector id="dateofstart" />
           </div>
           <h3 className={styles["AdressTitle"]}> Address </h3>
           <div className={styles["AdressForm"]}>
