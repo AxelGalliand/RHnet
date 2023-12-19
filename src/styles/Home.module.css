@@ -3,3 +3,39 @@
   flex-direction: column;
   margin-bottom: 1rem;
 }
+
+.firstNameWarn{
+  display: none;
+}
+
+.lastNameWarn{  
+  display: none;
+}
+
+.dateOfBirthWarn{
+  display: none;
+}
+
+.dateOfStartWarn{
+  display: none;
+}
+
+.streetWarn{
+  display: none;
+}
+
+.cityWarn{
+  display: none;
+}
+
+.stateWarn{
+  display: none;
+}
+
+.zipCodeWarn{
+  display: none;
+}
+
+.departmentWarn{
+  display: none;
+}

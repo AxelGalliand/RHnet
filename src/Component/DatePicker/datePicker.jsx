@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 /**
  * 
@@ -7,14 +7,19 @@ import PropTypes from 'prop-types'
  * @returns {jsx|Component}
  */
 const DateSelector = (props) => {
+    const handleChange = (e) => {
+        console.log(e)
+        props.selectDate(e.target.value)
+    }
 
     return (
-        <input type="date" ref={props.dateof}/>
+        <input type="date" onChange={handleChange}/>
     )
 
 };
 
 DateSelector.propTypes ={
-    dateof: PropTypes.func
+    selectDate: PropTypes.func
    }
+
 export default DateSelector;

@@ -1,49 +1,134 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from '../styles/Home.module.css';
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { employeCreation } from "../features/employe.slice";
 import DateSelector from "../Component/DatePicker/datePicker";
+import Selector from "../Component/Selector/selector";
+import { current } from "@reduxjs/toolkit";
 
 
 const Home =()=> {
-  const inputFirstName = useRef();
-  const inputLastName = useRef();
-  const inputDateOfBirth = useRef();
-  const inputDateOfStart = useRef();
-  const inputStreet = useRef();
-  const inputCity = useRef();
-  const inputState = useRef();
-  const inputZipCode = useRef();
-  const inputDepartment = useRef();
+  const inputFirstNameRef = useRef();
+  const [inputFirstName, setInputFirstName] = useState(null);
+  const inputLastNameRef = useRef();
+  const [inputLastName, setInputLastName] = useState("");
+  const [inputDateOfBirth, setInputDateOfBirth] = useState("");
+  const [inputDateOfStart, setInputDateOfStart] = useState("");
+  const inputStreetRef = useRef();
+  const [inputStreet, setInputStreet] = useState("");
+  const inputCityRef = useRef();
+  const [inputCity, setInputCity] = useState("");
+  const [inputState, setInputState] = useState("");
+  const inputZipCodeRef = useRef();
+  const [inputZipCode, setInputZipCode] = useState("");
+  const [inputDepartment, setInputDepartment] = useState("");
   const getAccessRef = useRef();
   const dispatch = useDispatch();
+
+  const states= [
+    { "abbreviation": "AK", "value": "Alaska" },
+    { "abbreviation": "AL", "value": "Alabama" },
+    { "abbreviation": "AS", "value": "American Samoa" },
+    { "abbreviation": "AZ", "value": "Arizona" },
+    { "abbreviation": "AR", "value": "Arkansas" },
+    { "abbreviation": "CA", "value": "California" },
+    { "abbreviation": "CO", "value": "Colorado" },
+    { "abbreviation": "CT", "value": "Connecticut" },
+    { "abbreviation": "DE", "value": "Delaware" },
+    { "abbreviation": "DC", "value": "District Of Columbia" },
+    { "abbreviation": "FM", "value": "Federated States Of Micronesia" },
+    { "abbreviation": "FL", "value": "Florida" },
+    { "abbreviation": "GA", "value": "Georgia" },
+    { "abbreviation": "GU", "value": "Guam" },
+    { "abbreviation": "HI", "value": "Hawaii" },
+    { "abbreviation": "ID", "value": "Idaho" },
+    { "abbreviation": "IL", "value": "Illinois" },
+    { "abbreviation": "IN", "value": "Indiana" },
+    { "abbreviation": "IA", "value": "Iowa" },
+    { "abbreviation": "KS", "value": "Kansas" },
+    { "abbreviation": "KY", "value": "Kentucky" },
+    { "abbreviation": "LA", "value": "Louisiana" },
+    { "abbreviation": "ME", "value": "Maine" },
+    { "abbreviation": "MH", "value": "Marshall Islands" },
+    { "abbreviation": "MD", "value": "Maryland" },
+    { "abbreviation": "MA", "value": "Massachusetts" },
+    { "abbreviation": "MI", "value": "Michigan" },
+    { "abbreviation": "MN", "value": "Minnesota" },
+    { "abbreviation": "MS", "value": "Mississippi" },
+    { "abbreviation": "MO", "value": "Missouri" },
+    { "abbreviation": "MT", "value": "Montana" },
+    { "abbreviation": "NE", "value": "Nebraska" },
+    { "abbreviation": "NV", "value": "Nevada" },
+    { "abbreviation": "NH", "value": "New Hampshire" },
+    { "abbreviation": "NJ", "value": "New Jersey" },
+    { "abbreviation": "NM", "value": "New Mexico" },
+    { "abbreviation": "NY", "value": "New York" },
+    { "abbreviation": "NC", "value": "North Carolina" },
+    { "abbreviation": "ND", "value": "North Dakota" },
+    { "abbreviation": "MP", "value": "Northern Mariana Islands" },
+    { "abbreviation": "OH", "value": "Ohio" },
+    { "abbreviation": "OK", "value": "Oklahoma" },
+    { "abbreviation": "OR", "value": "Oregon" },
+    { "abbreviation": "PW", "value": "Palau" },
+    { "abbreviation": "PA", "value": "Pennsylvania" },
+    { "abbreviation": "PR", "value": "Puerto Rico" },
+    { "abbreviation": "RI", "value": "Rhode Island" },
+    { "abbreviation": "SC", "value": "South Carolina" },
+    { "abbreviation": "SD", "value": "South Dakota" },
+    { "abbreviation": "TN", "value": "Tennessee" },
+    { "abbreviation": "TX", "value": "Texas" },
+    { "abbreviation": "UT", "value": "Utah" },
+    { "abbreviation": "VT", "value": "Vermont" },
+    { "abbreviation": "VI", "value": "Virgin Islands" },
+    { "abbreviation": "VA", "value": "Virginia" },
+    { "abbreviation": "WA", "value": "Washington" },
+    { "abbreviation": "WV", "value": "West Virginia" },
+    { "abbreviation": "WI", "value": "Wisconsin" },
+    { "abbreviation": "WY", "value": "Wyoming" }
+  ];
+  
+
+
+  const departments =[
+    {"abbreviation": "SL","value": "Sales"},
+    {"abbreviation": "MK","value": "Marketing"},
+    {"abbreviation": "EG","value": "Engeneering"},
+    {"abbreviation": "HR","value": "Human Resources"},
+    {"abbreviation": "LG","value": "Legal"}
+  ];
+
+
+
   const handleSubmit = (e) => {
    e.preventDefault();
+   setInputFirstName(inputFirstNameRef.current.value);
+   setInputLastName(inputLastNameRef.current.value);
+   setInputStreet(inputStreetRef.current.value);
+   setInputCity(inputCityRef.current.value);
+   setInputZipCode(inputZipCodeRef.current.value);
+
+   console.log(inputFirstName)
+   if(inputFirstName === null){
+    console.log("test")
+   }
+
    const data = {
-     firstName: inputFirstName.current.value,
-     lastName: inputLastName.current.value,
-    //  dateBirth: inputDateOfBirth.current.value,
-    //  dateStart: inputDateOfStart.current.value,
-     street: inputStreet.current.value,
-     city: inputCity.current.value,
-     state: inputState.current.value,
-     zipCode: inputZipCode.current.value,
-     departement: inputDepartment.current.value
+     firstName: inputFirstNameRef.current.value,
+     lastName: inputLastNameRef.current.value,
+     dateBirth: inputDateOfBirth,
+     dateStart: inputDateOfStart,
+     street: inputStreetRef.current.value,
+     city: inputCityRef.current.value,
+     state: inputState,
+     zipCode: inputZipCodeRef.current.value,
+     departement: inputDepartment
 
    };
-
  
   dispatch(employeCreation(data))
   }
-     
-  const onDateOf = (dateOf) => {
-    console.log(dateOf)
-
-   }
-
-
    return(
     <main>
     <div className={styles["title"]}>
@@ -60,109 +145,52 @@ const Home =()=> {
         <form className={styles["sign-inForm"]} onSubmit={(e) => handleSubmit(e)} ref={getAccessRef}>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="firstname">FirstName</label>
-            <input type="text" id="firstname" ref={inputFirstName}/>
+            <span className={styles["firstNameWarn"]}>A first name is needed !</span>
+            <input type="text" id="firstname" ref={inputFirstNameRef}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="lastname">LastName</label>
-            <input type="text" id="lastname" ref={inputLastName}/>
+            <span className={styles["lastNameWarn"]}>A last name is needed !</span>
+            <input type="text" id="lastname" ref={inputLastNameRef}/>
           </div>
           <div className={styles["input-wrapper"]}>
-            <label htmlFor="dateofbirth">Date of Birth</label>
-            <DateSelector id="dateofbirth" dateof={onDateOf}/>
+            <label htmlFor="dateOfbirth">Date of Birth</label>
+            <span className={styles["dateOfBirthWarn"]}>A date of birth is needed !</span>
+            <DateSelector id="dateofbirth" selectDate={(e) => setInputDateOfBirth(e)}/>
           </div>
           <div className={styles["input-wrapper"]}>
-            <label htmlFor="dateofstart">Date of Start</label>
-            <DateSelector id="dateofstart" />
+            <label htmlFor="dateOfstart">Date of Start</label>
+            <span className={styles["dateOfStartWarn"]}>A date of start is needed !</span>
+            <DateSelector id="dateofstart" selectDate={(e) => setInputDateOfStart(e)} />
           </div>
           <h3 className={styles["AdressTitle"]}> Address </h3>
           <div className={styles["AdressForm"]}>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="street">Street</label>
-              <input type="text" id="street" ref={inputStreet}/>
+              <span className={styles["streetWarn"]}>A street is needed !</span>
+              <input type="text" id="street" ref={inputStreetRef}/>
             </div>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="city">City</label>
-              <input type="text" id="city" ref={inputCity}/>
+              <span className={styles["cityWarn"]}>A city is needed !</span>
+              <input type="text" id="city" ref={inputCityRef}/>
             </div>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="state">State</label>
-              <select className={styles["stateWrapper"]} id="state" ref={inputState}>
-                <option value="AK">Alaska</option>
-                <option value="AL">Alabama</option>
-                <option value="AS">American Samoa</option>
-                <option value="AZ">Arizona</option>
-                <option value="AR">Arkansas</option>
-                <option value="CA">California</option>
-                <option value="CO">Colorado</option>
-                <option value="CT">Connecticut</option>
-                <option value="DE">Delaware</option>
-                <option value="DC">District Of Columbia</option>
-                <option value="FM">Federated States Of Micronesia</option>
-                <option value="FL">Florida</option>
-                <option value="GA">Georgia</option>
-                <option value="GU">Guam</option>
-                <option value="HI">Hawaii</option>
-                <option value="ID">Idaho</option>
-                <option value="IL">Illinois</option>
-                <option value="IN">Indiana</option>
-                <option value="IA">Iowa</option>
-                <option value="KS">Kansas</option>
-                <option value="KY">Kentucky</option>
-                <option value="LA">Louisiana</option>
-                <option value="ME">Maine</option>
-                <option value="MH">Marshall Islands</option>
-                <option value="MD">Maryland</option>
-                <option value="MA">Massachusetts</option>
-                <option value="MI">Michigan</option>
-                <option value="MN">Minnesota</option>
-                <option value="MS">Mississippi</option>
-                <option value="MO">Missouri</option>
-                <option value="MT">Montana</option>
-                <option value="NE">Nebraska</option>
-                <option value="NV">Nevada</option>
-                <option value="NH">New Hampshire</option>
-                <option value="NJ">New Jersey</option>
-                <option value="NM">New Mexico</option>
-                <option value="NY">New York</option>
-                <option value="NC">North Carolina</option>
-                <option value="ND">North Dakota</option>
-                <option value="MP">Northern Mariana Islands</option>
-                <option value="OH">Ohio</option>
-                <option value="OK">Oklahoma</option>
-                <option value="OR">Oregon</option>
-                <option value="PW">Palau</option>
-                <option value="PA">Pennsylvania</option>
-                <option value="PR">Puerto Rico</option>
-                <option value="RI">Rhode Island</option>
-                <option value="SC">South Carolina</option>
-                <option value="SD">South Dakota</option>
-                <option value="TN">Tennessee</option>
-                <option value="TX">Texas</option>
-                <option value="UT">Utah</option>
-                <option value="VT">Vermont</option>
-                <option value="VI">Virgin Islands</option>
-                <option value="VA">Virginia</option>
-                <option value="WA">Washington</option>
-                <option value="WV">West Virginia</option>
-                <option value="WI">Wisconsin</option>
-                <option value="WY">Wyoming</option>
-              </select>
+              <span className={styles["stateWarn"]}>A state is needed !</span>
+              <Selector className={styles["stateWrapper"]} id="state" options={states} select={(value) => setInputState(value)}/>        
             </div>
 
             <div className={styles["input-wrapper"]}>
               <label htmlFor="zipcode">Zip Code</label>
-              <input type="text" id="zipcode" ref={inputZipCode}/>
+              <span className={styles["zipCodeWarn"]}>A zip code is needed !</span>
+              <input type="text" id="zipcode" ref={inputZipCodeRef}/>
             </div>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="department">Department</label>
-            <select className={styles["departmentWrapper"]} id="department" ref={inputDepartment}>
-              <option>Sales</option>
-              <option>Marketing</option>
-              <option>Engeneering</option>
-              <option>Human Resources</option>
-              <option>Legal</option>
-            </select>
+            <span className={styles["departmentWarn"]}>A department is needed !</span>
+            <Selector className={styles["departmentWrapper"]} id="department" options={departments} select={(value) => setInputDepartment(value)}/>
           </div>
           
           <button className={styles["sign-in-button"]}>Sign In</button> 
