@@ -4,7 +4,12 @@
   margin-bottom: 1rem;
 }
 
-.firstNameWarn{
+.has-error {
+  display: block!important;
+  color: red;
+}
+
+.firstNameWarn{  
   display: none;
 }
 

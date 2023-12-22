@@ -6,27 +6,31 @@ import { useDispatch } from "react-redux";
 import { employeCreation } from "../features/employe.slice";
 import DateSelector from "../Component/DatePicker/datePicker";
 import Selector from "../Component/Selector/selector";
-import { current } from "@reduxjs/toolkit";
+import Modal from"../Component/Modal/modal";
 
 
 const Home =()=> {
   const inputFirstNameRef = useRef();
-  const [inputFirstName, setInputFirstName] = useState(null);
+  const [errorFirstName, setErrorFirstName] = useState(false)
   const inputLastNameRef = useRef();
-  const [inputLastName, setInputLastName] = useState("");
+  const [errorLastName, setErrorLastName] = useState(false);
   const [inputDateOfBirth, setInputDateOfBirth] = useState("");
+  const [errorDateOfBirth, setErrorDateOfBirth] = useState(false);
   const [inputDateOfStart, setInputDateOfStart] = useState("");
+  const [errorDateOfStart, setErrorDateOfStart] = useState(false);
   const inputStreetRef = useRef();
-  const [inputStreet, setInputStreet] = useState("");
+  const [errorStreet, setErrorStreet] = useState(false);
   const inputCityRef = useRef();
-  const [inputCity, setInputCity] = useState("");
+  const [errorCity, setErrorCity] = useState(false);
   const [inputState, setInputState] = useState("");
+  const [errorState, setErrorState] = useState(false);
   const inputZipCodeRef = useRef();
-  const [inputZipCode, setInputZipCode] = useState("");
+  const [errorZipCode, setErrorZipCode] = useState(false);
   const [inputDepartment, setInputDepartment] = useState("");
+  const [errorDepartment, setErrorDepartment] = useState(false);
   const getAccessRef = useRef();
   const dispatch = useDispatch();
-
+  
   const states= [
     { "abbreviation": "AK", "value": "Alaska" },
     { "abbreviation": "AL", "value": "Alabama" },
@@ -89,8 +93,6 @@ const Home =()=> {
     { "abbreviation": "WY", "value": "Wyoming" }
   ];
   
-
-
   const departments =[
     {"abbreviation": "SL","value": "Sales"},
     {"abbreviation": "MK","value": "Marketing"},
@@ -99,35 +101,59 @@ const Home =()=> {
     {"abbreviation": "LG","value": "Legal"}
   ];
 
-
-
   const handleSubmit = (e) => {
    e.preventDefault();
-   setInputFirstName(inputFirstNameRef.current.value);
-   setInputLastName(inputLastNameRef.current.value);
-   setInputStreet(inputStreetRef.current.value);
-   setInputCity(inputCityRef.current.value);
-   setInputZipCode(inputZipCodeRef.current.value);
 
-   console.log(inputFirstName)
-   if(inputFirstName === null){
-    console.log("test")
+   if(inputFirstNameRef.current.value === ""){
+    setErrorFirstName(true)
+   }
+   if(inputLastNameRef.current.value === ""){
+    setErrorLastName(true)
+   }
+   if(inputDateOfBirth === ""){
+    setErrorDateOfBirth(true)
+   }
+   if(inputDateOfStart === ""){
+    setErrorDateOfStart(true)
+   }
+   if(inputStreetRef.current.value === ""){
+    setErrorStreet(true)
+   }
+   if(inputCityRef.current.value === ""){
+    setErrorCity(true)
+   }
+   if(inputState === ""){
+    setErrorState(true)
+   }
+   if(inputZipCodeRef.current.value === ""){
+    setErrorZipCode(true)
+   }
+   if(inputDepartment === ""){
+    setErrorDepartment(true)
    }
 
-   const data = {
-     firstName: inputFirstNameRef.current.value,
-     lastName: inputLastNameRef.current.value,
-     dateBirth: inputDateOfBirth,
-     dateStart: inputDateOfStart,
-     street: inputStreetRef.current.value,
-     city: inputCityRef.current.value,
-     state: inputState,
-     zipCode: inputZipCodeRef.current.value,
-     departement: inputDepartment
+   console.log(errorFirstName)
 
-   };
+
+   if(errorFirstName === true || errorLastName === true || errorDateOfBirth === true || errorDateOfStart === true || errorStreet === true || errorCity === true || errorState === true || errorZipCode === true || errorDepartment === true ){
+    console.log("teste")
+   }else{
+    console.log("qifg")
+    // const data = {
+    //    firstName: inputFirstNameRef.current.value,
+    //    lastName: inputLastNameRef.current.value,
+    //    dateBirth: inputDateOfBirth,
+    //    dateStart: inputDateOfStart,
+    //    street: inputStreetRef.current.value,
+    //    city: inputCityRef.current.value,
+    //    state: inputState,
+    //    zipCode: inputZipCodeRef.current.value,
+    //    departement: inputDepartment
+    // };
+    // <Modal/>
  
-  dispatch(employeCreation(data))
+    // dispatch(employeCreation(data))
+   }
   }
    return(
     <main>
@@ -145,51 +171,51 @@ const Home =()=> {
         <form className={styles["sign-inForm"]} onSubmit={(e) => handleSubmit(e)} ref={getAccessRef}>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="firstname">FirstName</label>
-            <span className={styles["firstNameWarn"]}>A first name is needed !</span>
+            <span className={`${styles["firstNameWarn"]} ${errorFirstName ? styles["has-error"]: null}`}>A first name is needed !</span>
             <input type="text" id="firstname" ref={inputFirstNameRef}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="lastname">LastName</label>
-            <span className={styles["lastNameWarn"]}>A last name is needed !</span>
+            <span className={`${styles["lastNameWarn"]} ${errorLastName ? styles["has-error"]: null}`}>A last name is needed !</span>
             <input type="text" id="lastname" ref={inputLastNameRef}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateOfbirth">Date of Birth</label>
-            <span className={styles["dateOfBirthWarn"]}>A date of birth is needed !</span>
+            <span className={`${styles["dateOfBirthWarn"]} ${errorDateOfBirth ? styles["has-error"]: null}`}>A date of birth is needed !</span>
             <DateSelector id="dateofbirth" selectDate={(e) => setInputDateOfBirth(e)}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateOfstart">Date of Start</label>
-            <span className={styles["dateOfStartWarn"]}>A date of start is needed !</span>
+            <span className={`${styles["dateOfStartWarn"]} ${errorDateOfStart ? styles["has-error"]: null}`}>A date of start is needed !</span>
             <DateSelector id="dateofstart" selectDate={(e) => setInputDateOfStart(e)} />
           </div>
           <h3 className={styles["AdressTitle"]}> Address </h3>
           <div className={styles["AdressForm"]}>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="street">Street</label>
-              <span className={styles["streetWarn"]}>A street is needed !</span>
+              <span className={`${styles["streetWarn"]} ${errorStreet ? styles["has-error"]: null}`}>A street is needed !</span>
               <input type="text" id="street" ref={inputStreetRef}/>
             </div>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="city">City</label>
-              <span className={styles["cityWarn"]}>A city is needed !</span>
+              <span className={`${styles["cityWarn"]} ${errorCity ? styles["has-error"]: null}`}>A city is needed !</span>
               <input type="text" id="city" ref={inputCityRef}/>
             </div>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="state">State</label>
-              <span className={styles["stateWarn"]}>A state is needed !</span>
+              <span className={`${styles["stateWarn"]} ${errorState ? styles["has-error"]: null}`}>A state is needed !</span>
               <Selector className={styles["stateWrapper"]} id="state" options={states} select={(value) => setInputState(value)}/>        
             </div>
 
             <div className={styles["input-wrapper"]}>
               <label htmlFor="zipcode">Zip Code</label>
-              <span className={styles["zipCodeWarn"]}>A zip code is needed !</span>
+              <span className={`${styles["zipCodeWarn"]} ${errorZipCode ? styles["has-error"]: null}`}>A zip code is needed !</span>
               <input type="text" id="zipcode" ref={inputZipCodeRef}/>
             </div>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="department">Department</label>
-            <span className={styles["departmentWarn"]}>A department is needed !</span>
+            <span className={`${styles["departmentWarn"]} ${errorDepartment ? styles["has-error"]: null}`}>A department is needed !</span>
             <Selector className={styles["departmentWrapper"]} id="department" options={departments} select={(value) => setInputDepartment(value)}/>
           </div>
           
