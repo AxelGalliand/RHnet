@@ -1,13 +1,17 @@
 .modalContainer {
-    display: block;
-}
-
-.modal {
-    display:flex ;
+    display: flex;
     position: fixed;
     z-index: 1;
     left: 0;
     right: 0;
+    top: 0;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.modal {
+    display:flex ;
     border-radius: 20px;
     background-color: #ffffff;
     width: 50%;
@@ -16,6 +20,7 @@
     justify-content: space-between;
     padding: 35px;
     margin: auto;
+    
 }
 
 .modal_span {

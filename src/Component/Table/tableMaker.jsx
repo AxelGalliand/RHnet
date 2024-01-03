@@ -47,17 +47,7 @@ const TableMaker = (props) => {
 
 
     const filteredEmployees = data.filter((row) => {
-      return (
-        row.firstName.toLowerCase().includes(search) ||
-        row.lastName.toLowerCase().includes(search) ||
-        row.dateBirth.toLowerCase().includes(search) ||
-        row.dateStart.toLowerCase().includes(search) ||
-        row.street.toLowerCase().includes(search) ||
-        row.city.toLowerCase().includes(search) ||
-        row.state.toLowerCase().includes(search) ||
-        row.zipCode.toLowerCase().includes(search) ||
-        row.departement.toLowerCase().includes(search)
-      )
+      return Object.keys(row).some((key) => row[key].toLowerCase().includes(search))
     })
 
     const sortedEmployees = filteredEmployees.sort((a,b) => {
@@ -137,18 +127,15 @@ const TableMaker = (props) => {
           </div>
           <div className={styles["paginate"]}>
 
-            <button onClick={() => firstPage()}>1</button>
+            <button onClick={() => firstPage()} className={currentPage === 1 ? 'active' : null} >1</button>
             {currentPage === 1 ? null : <button onClick={() => previousPage()}><img src={chevLeft}/></button>}
 
             {range(2, totalPage-1).map((numberPage) => {
-              return (
-                <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}>
-                  {numberPage}
-                </button>
-              )
+              if (numberPage === currentPage-2 || numberPage === currentPage-1 || numberPage === currentPage || numberPage === currentPage+1 || numberPage === currentPage+2) {
+                return <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}> {numberPage}</button>}
             })}
             {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><img src={chevRight}/></button>}
-            {totalPage === 1 ? null : <button onClick={() => lastPage()}>{totalPage}</button>}
+            {totalPage === 1 ? null : <button onClick={() => lastPage()} className={currentPage === totalPage ? 'active' : null}>{totalPage}</button>}
           </div>
             <Table striped bordered hover>
               <thead>
@@ -163,18 +150,15 @@ const TableMaker = (props) => {
         
           <div className={styles["paginate"]}>
 
-            <button onClick={() => firstPage()}>1</button>
+            <button onClick={() => firstPage()} className={currentPage === 1 ? 'active' : null}>1</button>
             {currentPage === 1 ? null : <button onClick={() => previousPage()}><img src={chevLeft}/></button>}
 
             {range(2, totalPage-1).map((numberPage) => {
-              return (
-                <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}>
-                  {numberPage}
-                </button>
-              )
+              if (numberPage === currentPage-2 || numberPage === currentPage-1 || numberPage === currentPage || numberPage === currentPage+1 || numberPage === currentPage+2) {
+                return <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}> {numberPage}</button>}
             })}
             {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><img src={chevRight}/></button>}
-            {totalPage === 1 ? null : <button onClick={() => lastPage()}>{totalPage}</button>}
+            {totalPage === 1 ? null : <button onClick={() => lastPage()} className={currentPage === totalPage ? 'active' : null}>{totalPage}</button>}
           </div>
 
         </div>

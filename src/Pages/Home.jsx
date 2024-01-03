@@ -30,7 +30,7 @@ const Home =()=> {
   const [errorDepartment, setErrorDepartment] = useState(false);
   const getAccessRef = useRef();
   const dispatch = useDispatch();
-  
+  const [openModal, setOpenModal] = useState(false);
   const states= [
     { "abbreviation": "AK", "value": "Alaska" },
     { "abbreviation": "AL", "value": "Alabama" },
@@ -101,58 +101,121 @@ const Home =()=> {
     {"abbreviation": "LG","value": "Legal"}
   ];
 
+  const clearForm = () => {
+    inputFirstNameRef.current.value = "";
+    inputLastNameRef.current.value = "";
+    setInputDateOfBirth("");
+    setInputDateOfStart("");
+    inputStreetRef.current.value = "";
+    inputCityRef.current.value = "";
+    setInputState("");
+    inputZipCodeRef.current.value = "";
+    setInputDepartment("");
+  }
   const handleSubmit = (e) => {
    e.preventDefault();
+    // variable pour savoir si on a une erreur ou pas
+    // juste pour la logique pas pour le rendu
+    let hasErrorFirstName = false;
+    let hasErrorLastName = false;
+    let hasErrorDateOfBirth = false;
+    let hasErrorDateOfStart = false;
+    let hasErrorStreet = false;
+    let hasErrorCity = false;
+    let hasErrorState = false;
+    let hasErrorZipCode = false;
+    let hasErrorDepartment = false;
 
+   console.log(inputDateOfBirth)
+   
    if(inputFirstNameRef.current.value === ""){
     setErrorFirstName(true)
+    hasErrorFirstName = true
+    console.log("qljhnfgb")
+   } else {
+    setErrorFirstName(false)
    }
    if(inputLastNameRef.current.value === ""){
     setErrorLastName(true)
-   }
+    hasErrorLastName = true
+   } else {
+    setErrorLastName(false)
+    }
    if(inputDateOfBirth === ""){
     setErrorDateOfBirth(true)
-   }
+    hasErrorDateOfBirth = true
+    console.log("on teste des trucs")
+   } else {
+    setErrorDateOfBirth(false)
+    }
+
    if(inputDateOfStart === ""){
     setErrorDateOfStart(true)
-   }
+    hasErrorDateOfStart = true
+   } else {
+    setErrorDateOfStart(false)
+    }
+
    if(inputStreetRef.current.value === ""){
+    console.log("value street", inputStreetRef.current.value)
     setErrorStreet(true)
-   }
+    hasErrorStreet = true
+    console.log(errorStreet)
+   } else {
+    setErrorStreet(false)
+    }
+
    if(inputCityRef.current.value === ""){
     setErrorCity(true)
-   }
+    hasErrorCity = true
+   } else {
+    setErrorCity(false)
+    }
+
    if(inputState === ""){
     setErrorState(true)
-   }
+    hasErrorState = true
+   } else {
+    setErrorState(false)
+    }
+
    if(inputZipCodeRef.current.value === ""){
     setErrorZipCode(true)
-   }
+    hasErrorZipCode = true
+   } else {
+    setErrorZipCode(false)
+    }
+
    if(inputDepartment === ""){
     setErrorDepartment(true)
-   }
+    hasErrorDepartment = true
+   } else {
+    setErrorDepartment(false)
+    }
+
 
    console.log(errorFirstName)
 
 
-   if(errorFirstName === true || errorLastName === true || errorDateOfBirth === true || errorDateOfStart === true || errorStreet === true || errorCity === true || errorState === true || errorZipCode === true || errorDepartment === true ){
-    console.log("teste")
+   if(hasErrorFirstName === true || hasErrorLastName === true || hasErrorDateOfBirth === true || hasErrorDateOfStart === true || hasErrorStreet === true || hasErrorCity === true || hasErrorState === true || hasErrorZipCode === true || hasErrorDepartment === true ){
+    console.log("a une erreur")
    }else{
-    console.log("qifg")
-    // const data = {
-    //    firstName: inputFirstNameRef.current.value,
-    //    lastName: inputLastNameRef.current.value,
-    //    dateBirth: inputDateOfBirth,
-    //    dateStart: inputDateOfStart,
-    //    street: inputStreetRef.current.value,
-    //    city: inputCityRef.current.value,
-    //    state: inputState,
-    //    zipCode: inputZipCodeRef.current.value,
-    //    departement: inputDepartment
-    // };
-    // <Modal/>
+    console.log("pas d'erreur")
+    const data = {
+       firstName: inputFirstNameRef.current.value,
+       lastName: inputLastNameRef.current.value,
+       dateBirth: inputDateOfBirth,
+       dateStart: inputDateOfStart,
+       street: inputStreetRef.current.value,
+       city: inputCityRef.current.value,
+       state: inputState,
+       zipCode: inputZipCodeRef.current.value,
+       departement: inputDepartment
+    };
  
-    // dispatch(employeCreation(data))
+    dispatch(employeCreation(data))
+    setOpenModal(true)
+    clearForm()
    }
   }
    return(
@@ -222,7 +285,7 @@ const Home =()=> {
           <button className={styles["sign-in-button"]}>Sign In</button> 
         </form>
       </section>
-
+      {openModal && <Modal setOpenModal={setOpenModal} />}
      </div>
      
   </main>
