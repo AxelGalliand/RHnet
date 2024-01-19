@@ -1,4 +1,4 @@
-// write composant display all employees in tanle
+// write composant display all datas in tanle
 // 1. import React
 import React, { useState } from 'react';
 import Table from 'react-bootstrap/Table';
@@ -16,7 +16,6 @@ const TableMaker = (props) => {
     const [columns, setColumns] = useState(props.columns);
     const [slice, setSlice] = useState(10);
     const [search, setSearch] = useState("");
-    // const [totalPage, setTotalPage] = useState(Math.ceil(data.length / slice));
     const [currentPage, setCurrentPage] = useState(1);
     const [sortOrder, setSortOrder] = useState("ASC");
     const [sortColumn, setSortColumn] = useState(null);
@@ -45,12 +44,11 @@ const TableMaker = (props) => {
     }
 
 
-
-    const filteredEmployees = data.filter((row) => {
+    const filteredData = data.filter((row) => {
       return Object.keys(row).some((key) => row[key].toLowerCase().includes(search))
     })
 
-    const sortedEmployees = filteredEmployees.sort((a,b) => {
+    const sortedDatas = filteredData.sort((a,b) => {
       if(sortColumn !== null) {
         if (sortType === "Date") {
           return new Date(a[sortColumn]) - new Date(b[sortColumn])
@@ -64,12 +62,12 @@ const TableMaker = (props) => {
     })
     
     if (sortOrder === "DSC") {
-      sortedEmployees.reverse()
+      sortedDatas.reverse()
     }
-    const indexLastEmployee = currentPage * slice
-    const indexFirstEmployee = indexLastEmployee - slice
-    const currentEmployee = sortedEmployees.slice(indexFirstEmployee, indexLastEmployee)
-    const totalPage = Math.ceil(sortedEmployees.length / slice)
+    const indexLastData = currentPage * slice
+    const indexFirstData = indexLastData - slice
+    const currentData = sortedDatas.slice(indexFirstData, indexLastData)
+    const totalPage = Math.ceil(sortedDatas.length / slice)
     const SliceBy = (e) => {
       const number = +e.target.value
       setSlice(number)
@@ -107,47 +105,51 @@ const TableMaker = (props) => {
       setCurrentPage(currentPage + 1)
     }
 
-
-    
     
     return (
         
         <div className={styles["TableDiv"]}>
-          <input type='text' className={styles["TableSerch"]} placeholder='Recherche' onChange={SearchBar}></input>
-          <div className={styles["sizeButton"]}>
-            <select className={styles["sizeSelect"]} onChange={SliceBy}>
-              <option value={10}>10</option>
-              <option value={25}>25</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
-            </select>
-          </div>
-          <div className={styles["pagination"]}>
-              nombre de page {totalPage}
-          </div>
-          <div className={styles["paginate"]}>
+         
+          <div className={styles["paginateBlock"]}>
+            <input type='text' className={styles["TableSerch"]} placeholder='Research' onChange={SearchBar}></input>
+            <div className={styles["block-right"]}>
+              <div className={styles["sizeButton"]}>
+                <select className={styles["sizeSelect"]} onChange={SliceBy}>
+                  <option value={10}>10</option>
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                </select>
+              </div>
+              <div className={styles["paginate"]}>
 
-            <button onClick={() => firstPage()} className={currentPage === 1 ? 'active' : null} >1</button>
-            {currentPage === 1 ? null : <button onClick={() => previousPage()}><img src={chevLeft}/></button>}
+                <button onClick={() => firstPage()} className={currentPage === 1 ? 'active' : null} >1</button>
+                {currentPage === 1 ? null : <button onClick={() => previousPage()}><img src={chevLeft}/></button>}
 
-            {range(2, totalPage-1).map((numberPage) => {
-              if (numberPage === currentPage-2 || numberPage === currentPage-1 || numberPage === currentPage || numberPage === currentPage+1 || numberPage === currentPage+2) {
-                return <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}> {numberPage}</button>}
-            })}
-            {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><img src={chevRight}/></button>}
-            {totalPage === 1 ? null : <button onClick={() => lastPage()} className={currentPage === totalPage ? 'active' : null}>{totalPage}</button>}
+                {range(2, totalPage-1).map((numberPage) => {
+                  if (numberPage === currentPage-2 || numberPage === currentPage-1 || numberPage === currentPage || numberPage === currentPage+1 || numberPage === currentPage+2) {
+                    return <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}> {numberPage}</button>}
+                })}
+                {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><img src={chevRight}/></button>}
+                {totalPage === 1 ? null : <button onClick={() => lastPage()} className={currentPage === totalPage ? 'active' : null}>{totalPage}</button>}
+              </div>
+            </div>
           </div>
-            <Table striped bordered hover>
-              <thead>
+          <div className={styles["TableContener"]}>
+            <Table className={styles["Table"]}>
+              <thead className={styles["TableThead"]}>
                 <tr>
                   {columns.map((column) => <th className={styles["columnTitle"]} key={column.dataField} onClick={() => sortRow(column)}>
-                    {column.text} {column.sortOrder === "ASC" ? <img src={chevDown}/> : <img src={chevUp}/>}
+                    <div className={styles["TableTheadTitle"]}>
+                    <span>{column.text}</span>
+                     {column.sortOrder === "ASC" ? <img src={chevDown}/> : <img src={chevUp}/>}
+                     </div>
                   </th>)}
                 </tr>
               </thead>
-                <TableContent columns={columns} data={currentEmployee} />
+              <TableContent columns={columns} data={currentData} />
             </Table>  
-        
+          </div>
           <div className={styles["paginate"]}>
 
             <button onClick={() => firstPage()} className={currentPage === 1 ? 'active' : null}>1</button>

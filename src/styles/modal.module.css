@@ -18,12 +18,16 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 35px;
+    padding: 1.5rem;
     margin: auto;
     
 }
 
 .modal_span {
     color: black;
-    font-size: x-large;
+    font-size: xx-large;
+}
+
+.modal_icon {
+    align-self: flex-end;
 }

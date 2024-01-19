@@ -11,7 +11,7 @@ const TableContent = (props) => {
   
     return (
         <tbody>
-            {props.data.map((row, index) => <tr key={index}>
+            {props.data.map((row, index) => <tr className={styles["TableLine"]} key={index}>
               {props.columns.map((column, index) => <td key={index}>{row[column.dataField]}</td>)} 
             </tr>)}
       </tbody>

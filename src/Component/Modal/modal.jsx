@@ -1,5 +1,6 @@
 import styles from '../../styles/modal.module.css';
 import closeIcon from '../../assets/close.svg';
+import PropTypes from 'prop-types';
 
 
 /**
@@ -7,10 +8,6 @@ import closeIcon from '../../assets/close.svg';
  * @returns {jsx|Component}
  */
 const Modal = ({setOpenModal}) => {
-
-   const closeModal = () => {
-    
-   }
 
  return (
    <div className={styles['modalContainer']}>
@@ -22,6 +19,10 @@ const Modal = ({setOpenModal}) => {
     </div>
    </div>  
  )
-}
+};
+
+Modal.propTypes ={
+  setOpenModal: PropTypes.func
+ }
 
 export default Modal;

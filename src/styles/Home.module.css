@@ -1,7 +1,20 @@
+h1 {
+  margin: 1rem;
+}
+
 .input-wrapper {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+}
+
+.employeForm{
+  /* border: 1px solid rgb(255, 255, 255);  */
+  border-radius: 1rem;
+  padding: 1rem 5rem;
+  -webkit-box-shadow: 0px 11px 23px 5px #000139; 
+  box-shadow: 0px 11px 23px 5px #01037ea9;
+  background: linear-gradient(to bottom right, darkblue, blueviolet);
 }
 
 .has-error {
