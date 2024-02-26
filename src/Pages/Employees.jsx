@@ -1,7 +1,7 @@
 // write composant display all employees in tanle
 // 1. import React
 import styles from '../styles/EmployeeList.module.css';
-import TableMaker from '../Component/Table/tableMaker';
+import TableMaker from 'axelgalliand_table-maker/src';
 import { useSelector } from 'react-redux';
 import { stateEmploye } from '../features/employe.slice';
 const Employees = () => {
