@@ -1,13 +1,6 @@
-// write composant display all datas in tanle
-// 1. import React
-import React, { useState } from 'react';
-import Table from 'react-bootstrap/Table';
+import { useState } from 'react';
 import styles from '../../styles/tableMaker.module.css';
 import TableContent from './TableContent';
-import chevUp from '../../assets/chevronUp.svg';
-import chevDown from '../../assets/chevronDown.svg';
-import chevRight from '../../assets/chevronRight.svg';
-import chevLeft from '../../assets/chevronLeft.svg';
 import PropTypes from 'prop-types';
 
 const TableMaker = (props) => {
@@ -27,14 +20,9 @@ const TableMaker = (props) => {
       setSortOrder(sortOrder === "ASC" ? "DSC" : "ASC")
       
       const columnsUpdated = [...columns];
-      // on met à jour la column
-      // on récupère l'index de la column à mettre à jour
       const indexColumn = columnsUpdated.findIndex((col) => col.dataField === column.dataField)
-      // on met à la column dans le tableau
       columnsUpdated[indexColumn].sortOrder = sortOrder === "ASC" ? "DSC" : "ASC";
-      // on met à jour les states
       setColumns(columnsUpdated)
-      // setRows(rowsSorted)
     }
 
 
@@ -124,42 +112,42 @@ const TableMaker = (props) => {
               <div className={styles["paginate"]}>
 
                 <button onClick={() => firstPage()} className={currentPage === 1 ? 'active' : null} >1</button>
-                {currentPage === 1 ? null : <button onClick={() => previousPage()}><img src={chevLeft}/></button>}
+                {currentPage === 1 ? null : <button onClick={() => previousPage()}><svg className={styles['svg']} height="1em" viewBox="0 0 512 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg></button>}
 
                 {range(2, totalPage-1).map((numberPage) => {
                   if (numberPage === currentPage-2 || numberPage === currentPage-1 || numberPage === currentPage || numberPage === currentPage+1 || numberPage === currentPage+2) {
                     return <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}> {numberPage}</button>}
                 })}
-                {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><img src={chevRight}/></button>}
+                {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><svg className={styles["svg"]} height="16" viewBox="0 0 512 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg></button>}
                 {totalPage === 1 ? null : <button onClick={() => lastPage()} className={currentPage === totalPage ? 'active' : null}>{totalPage}</button>}
               </div>
             </div>
           </div>
           <div className={styles["TableContener"]}>
-            <Table className={styles["Table"]}>
+            <table className={styles["Table"]}>
               <thead className={styles["TableThead"]}>
                 <tr>
                   {columns.map((column) => <th className={styles["columnTitle"]} key={column.dataField} onClick={() => sortRow(column)}>
                     <div className={styles["TableTheadTitle"]}>
                     <span>{column.text}</span>
-                     {column.sortOrder === "ASC" ? <img src={chevDown}/> : <img src={chevUp}/>}
+                     {column.sortOrder === "ASC" ? <svg className={styles['svg']} height="1em" viewBox="0 0 512 512"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg> : <svg className={styles['svg']} height="1em" viewBox="0 0 512 512"><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/></svg>}
                      </div>
                   </th>)}
                 </tr>
               </thead>
               <TableContent columns={columns} data={currentData} />
-            </Table>  
+            </table>  
           </div>
           <div className={styles["paginate"]}>
 
             <button onClick={() => firstPage()} className={currentPage === 1 ? 'active' : null}>1</button>
-            {currentPage === 1 ? null : <button onClick={() => previousPage()}><img src={chevLeft}/></button>}
+            {currentPage === 1 ? null : <button onClick={() => previousPage()}><svg className={styles['svg']} height="1em" viewBox="0 0 512 512"><path d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg></button>}
 
             {range(2, totalPage-1).map((numberPage) => {
               if (numberPage === currentPage-2 || numberPage === currentPage-1 || numberPage === currentPage || numberPage === currentPage+1 || numberPage === currentPage+2) {
                 return <button key={numberPage} onClick={() => changePage(numberPage)} className={currentPage === numberPage ? 'active' : null}> {numberPage}</button>}
             })}
-            {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><img src={chevRight}/></button>}
+            {currentPage === totalPage ? null : <button onClick={() => nextPage()} ><svg className={styles["svg"]} height="16" viewBox="0 0 512 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg></button>}
             {totalPage === 1 ? null : <button onClick={() => lastPage()} className={currentPage === totalPage ? 'active' : null}>{totalPage}</button>}
           </div>
 

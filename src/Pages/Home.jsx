@@ -219,7 +219,7 @@ const Home =()=> {
    }
   }
    return(
-    <main>
+    <main className={styles["mainHome"]}>
     <div className={styles["title"]}>
       <h1>HRnet</h1>
     </div>

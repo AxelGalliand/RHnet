@@ -1,1 +1,10 @@
+.mainEmployee {
+    display: flex;
+    justify-content: center;
+  }
 
+  @media (max-width: 1130px) {
+    .mainEmployee {
+        display: block;
+    }
+  }

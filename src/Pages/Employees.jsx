@@ -65,7 +65,7 @@ const Employees = () => {
 
 
     return (
-        <main>
+        <main className={styles["mainEmployee"]}>
          <TableMaker columns={columns} rows={data}  />
         </main>
     )

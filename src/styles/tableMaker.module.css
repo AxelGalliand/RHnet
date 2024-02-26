@@ -7,7 +7,7 @@
     padding: 1rem;
 
 }
-@media (max-width: 1130px) {
+@media (max-width: 1450px) {
     .TableDiv{
       margin: 0;
       font-size: smaller;
@@ -41,7 +41,7 @@
     align-items: center;
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1450px) {
     .paginateBlock{
       flex-direction: column;
       margin: 0;
@@ -51,7 +51,7 @@
 .paginate {
     align-self:flex-end ;
 }
-@media (max-width: 1130px) {
+@media (max-width: 1450px) {
     .paginate{
         align-self: center;
       
@@ -68,11 +68,11 @@
     border: 1px solid rgb(255, 255, 255); 
     border-radius: 1rem;
 }
-@media (max-width: 1130px) {
+@media (max-width: 1450px) {
     .TableContener{
       padding: 0em;
       margin: 0em;
-      overflow-x: scroll;
+      overflow-x: auto;
     }
   }
 
@@ -87,7 +87,7 @@
     padding: 0 1rem;
 }
 
-@media (max-width: 1130px) {
+@media (max-width: 1450px) {
     .columnTitle{
       padding: 0;
     }
@@ -97,8 +97,10 @@ th:first-child {
     border-left: none;
 }
 
-.Table {
+table {
     border-collapse: collapse;
+    width: 100%;
+    border-spacing:0 ;
 }
 
 .TableTheadTitle {
@@ -107,11 +109,12 @@ th:first-child {
     gap: 5px;
     justify-content: center;
 }
-@media (max-width: 1130px) {
-    .TableTheadTitle{
-      
-    }
-  }
+
+.svg {
+fill: #ffff;
+align-self: center;
+}
+
 
 
 .sizeSelect {
@@ -120,4 +123,10 @@ margin: 1em;
 
 .block-right {
     display: flex;
+}
+
+th , td {
+  min-width: 100px;
+  min-height: 30px;
+  padding: 8px;
 }
