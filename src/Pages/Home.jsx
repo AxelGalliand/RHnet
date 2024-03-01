@@ -220,9 +220,6 @@ const Home =()=> {
   }
    return(
     <main className={styles["mainHome"]}>
-    <div className={styles["title"]}>
-      <h1>HRnet</h1>
-    </div>
     <div className={styles["container"]}>
       <div className={styles["emplyoyeList-linkContainer"]}>
         <Link className={styles["employeList-link"]} to="/employees">
