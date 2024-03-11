@@ -2,12 +2,17 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  color: black;
 }
 
 
 h1 {
   margin: 1rem;
   
+}
+
+.employeList-link-text {
+  color: #ffffff;
 }
 
 .container {
@@ -25,8 +30,8 @@ h1 {
   border-radius: 1rem;
   padding: 1rem 5rem;
   -webkit-box-shadow: 0px 11px 23px 5px #000139; 
-  box-shadow: 0px 11px 23px 5px #01037ea9;
-  background: linear-gradient(to bottom right, darkblue, blueviolet);
+  box-shadow: 0px 11px 23px 5px #164649a9;
+  background: linear-gradient(to bottom right, rgb(255, 255, 255), rgb(43, 214, 226));
 }
 
 .has-error {

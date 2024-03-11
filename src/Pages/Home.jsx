@@ -114,8 +114,6 @@ const Home =()=> {
   }
   const handleSubmit = (e) => {
    e.preventDefault();
-    // variable pour savoir si on a une erreur ou pas
-    // juste pour la logique pas pour le rendu
     let hasErrorFirstName = false;
     let hasErrorLastName = false;
     let hasErrorDateOfBirth = false;
@@ -125,13 +123,10 @@ const Home =()=> {
     let hasErrorState = false;
     let hasErrorZipCode = false;
     let hasErrorDepartment = false;
-
-   console.log(inputDateOfBirth)
    
    if(inputFirstNameRef.current.value === ""){
     setErrorFirstName(true)
     hasErrorFirstName = true
-    console.log("qljhnfgb")
    } else {
     setErrorFirstName(false)
    }
@@ -144,7 +139,6 @@ const Home =()=> {
    if(inputDateOfBirth === ""){
     setErrorDateOfBirth(true)
     hasErrorDateOfBirth = true
-    console.log("on teste des trucs")
    } else {
     setErrorDateOfBirth(false)
     }
@@ -157,10 +151,8 @@ const Home =()=> {
     }
 
    if(inputStreetRef.current.value === ""){
-    console.log("value street", inputStreetRef.current.value)
     setErrorStreet(true)
     hasErrorStreet = true
-    console.log(errorStreet)
    } else {
     setErrorStreet(false)
     }
@@ -192,10 +184,6 @@ const Home =()=> {
    } else {
     setErrorDepartment(false)
     }
-
-
-   console.log(errorFirstName)
-
 
    if(hasErrorFirstName === true || hasErrorLastName === true || hasErrorDateOfBirth === true || hasErrorDateOfStart === true || hasErrorStreet === true || hasErrorCity === true || hasErrorState === true || hasErrorZipCode === true || hasErrorDepartment === true ){
     console.log("a une erreur")
@@ -232,51 +220,51 @@ const Home =()=> {
           <div className={styles["input-wrapper"]}>
             <label htmlFor="firstname">FirstName</label>
             <span className={`${styles["firstNameWarn"]} ${errorFirstName ? styles["has-error"]: null}`}>A first name is needed !</span>
-            <input type="text" id="firstname" ref={inputFirstNameRef}/>
+            <input type="text" aria-label="input for the first name" id="firstname" ref={inputFirstNameRef}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="lastname">LastName</label>
             <span className={`${styles["lastNameWarn"]} ${errorLastName ? styles["has-error"]: null}`}>A last name is needed !</span>
-            <input type="text" id="lastname" ref={inputLastNameRef}/>
+            <input type="text" aria-label="input for the last name" id="lastname" ref={inputLastNameRef}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateOfbirth">Date of Birth</label>
             <span className={`${styles["dateOfBirthWarn"]} ${errorDateOfBirth ? styles["has-error"]: null}`}>A date of birth is needed !</span>
-            <DateSelector id="dateofbirth" selectDate={(e) => setInputDateOfBirth(e)}/>
+            <DateSelector id="dateofbirth" aria-label="date selector for the date of birth" selectDate={(e) => setInputDateOfBirth(e)}/>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="dateOfstart">Date of Start</label>
             <span className={`${styles["dateOfStartWarn"]} ${errorDateOfStart ? styles["has-error"]: null}`}>A date of start is needed !</span>
-            <DateSelector id="dateofstart" selectDate={(e) => setInputDateOfStart(e)} />
+            <DateSelector id="dateofstart" aria-label="date selector for the date of start" selectDate={(e) => setInputDateOfStart(e)} />
           </div>
           <h3 className={styles["AdressTitle"]}> Address </h3>
           <div className={styles["AdressForm"]}>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="street">Street</label>
               <span className={`${styles["streetWarn"]} ${errorStreet ? styles["has-error"]: null}`}>A street is needed !</span>
-              <input type="text" id="street" ref={inputStreetRef}/>
+              <input type="text"aria-label="input for the street" id="street" ref={inputStreetRef}/>
             </div>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="city">City</label>
               <span className={`${styles["cityWarn"]} ${errorCity ? styles["has-error"]: null}`}>A city is needed !</span>
-              <input type="text" id="city" ref={inputCityRef}/>
+              <input type="text" aria-label="input for the city" id="city" ref={inputCityRef}/>
             </div>
             <div className={styles["input-wrapper"]}>
               <label htmlFor="state">State</label>
               <span className={`${styles["stateWarn"]} ${errorState ? styles["has-error"]: null}`}>A state is needed !</span>
-              <Selector className={styles["stateWrapper"]} id="state" options={states} select={(value) => setInputState(value)}/>        
+              <Selector className={styles["stateWrapper"]} aria-label="selector for the state" id="state" options={states} select={(value) => setInputState(value)}/>        
             </div>
 
             <div className={styles["input-wrapper"]}>
               <label htmlFor="zipcode">Zip Code</label>
               <span className={`${styles["zipCodeWarn"]} ${errorZipCode ? styles["has-error"]: null}`}>A zip code is needed !</span>
-              <input type="text" id="zipcode" ref={inputZipCodeRef}/>
+              <input type="text" aria-label="input for the zip code" id="zipcode" ref={inputZipCodeRef}/>
             </div>
           </div>
           <div className={styles["input-wrapper"]}>
             <label htmlFor="department">Department</label>
             <span className={`${styles["departmentWarn"]} ${errorDepartment ? styles["has-error"]: null}`}>A department is needed !</span>
-            <Selector className={styles["departmentWrapper"]} id="department" options={departments} select={(value) => setInputDepartment(value)}/>
+            <Selector className={styles["departmentWrapper"]} aria-label="input for the department" id="department" options={departments} select={(value) => setInputDepartment(value)}/>
           </div>
           
           <button className={styles["sign-in-button"]}>Sign In</button> 

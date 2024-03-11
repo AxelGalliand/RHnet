@@ -13,7 +13,7 @@ const DateSelector = (props) => {
     }
 
     return (
-        <input type="date" onChange={handleChange}/>
+        <input type="date" aria-label="date selector for the date" onChange={handleChange}/>
     )
 
 };

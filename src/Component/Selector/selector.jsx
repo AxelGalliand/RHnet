@@ -13,7 +13,7 @@ const Selector = (props) => {
     }
 
     return (
-        <select onChange={handleChange}>
+        <select onChange={handleChange} aria-label="selector">
         {props.options.map((option, index) => <option key={index} value={option.abbrevation}>{option.value}</option>)}
         </select>
     )
@@ -26,16 +26,3 @@ Selector.propTypes ={
    }
 
 export default Selector;
-
-// return (
-//     <select onChange={handleChange}>
-//     {props.options.map((option, index) => {
-//     if (option.department === true) {
-        
-//         <option key={index} value={option.department}>{option.department}</option>
-//     } else {
-//         <option key={index} value={option.abbrevation}>{option.state}</option>
-//     }
-// })}
-//     </select>
-// )
