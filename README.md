@@ -1,8 +1,3 @@
-# React + Vite
+## Projet RHnet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Dernier Projet de la formation de développeur front-end, il consiste à la conversion d’une application de jQuery vers React. Plusieur element etait à convertire mais un devais etre un plugin React a publier par la suite sur NPM, j'ai choisi de créer mon propre plugin de tableau (Voici le lien de sa page NPM : https://www.npmjs.com/package/axelgalliand_table-maker )
